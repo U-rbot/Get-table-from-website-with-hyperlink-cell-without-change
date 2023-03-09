@@ -21,4 +21,64 @@ This formula splits the text by the comma character (assuming the text is in the
 
 d. Click "OK" to create the new column.
 
-Once you have transformed the column, you can save the table data to a CSV file by clicking "Close & Load" in the "Home" tab and selecting "Close & Load To" -> "CSV".
+Once you have transformed the column, you can save the table data to a CSV file by clicking "Close & Load" in the "Home" tab and selecting "Close & Load To" -> "CSV"
+
+NEXT METHOD:
+
+Open a new Excel workbook and go to the "Data" tab.
+
+Click "From Web" in the "Get & Transform Data" section.
+
+In the "From Web" dialog box, enter the URL of the webpage you want to extract the table from. For this example, let's use the GitHub search results page for the keyword "excel": https://github.com/search?q=excel&type=Repositories
+
+Click "OK" to open the "Navigator" window.
+
+In the "Navigator" window, select the table you want to extract by clicking the check box next to it. In this case, we want to extract the table containing the search results.
+
+Click "Edit" to open the Power Query Editor.
+
+In the Power Query Editor, select the column containing the GitHub links. In this case, it's the "Name" column.
+
+Right-click the column header and select "Split Column" > "By Delimiter".
+
+In the "Split Column" dialog box, select "Custom" as the delimiter and enter "https://github.com/" as the delimiter value.
+
+Click "OK" to split the column.
+
+In the new column that contains the GitHub links, right-click and select "Extract URLs".
+
+In the "Extract URLs" dialog box, select "Custom" as the type and enter "https://github.com/" as the URL pattern.
+
+Click "OK" to extract the URLs.
+
+Rename the columns as desired. For this example, let's rename the columns as follows:
+
+"Name" -> "Repository Name"
+"GitHub Link.1" -> "GitHub Link"
+"Language" -> "Repository Language"
+"Stars" -> "Number of Stars"
+Click "Close & Load" to load the table into Excel.
+
+Now, to make the GitHub text names clickable, select the "Repository Name" column.
+
+Go to the "Home" tab and click "Conditional Formatting" > "New Rule".
+
+In the "New Formatting Rule" dialog box, select "Format only cells that contain" > "Specific Text".
+
+Enter "github" as the specific text.
+
+Click the "Format" button and go to the "Font" tab.
+
+Select "Underline" and "Blue" as the font style.
+
+Click "OK" to close the "Format Cells" dialog box.
+
+Click "OK" to close the "New Formatting Rule" dialog box.
+
+Right-click the column header and select "Format Cells".
+
+In the "Format Cells" dialog box, go to the "Number" tab.
+
+Select "Custom" as the category and enter "@". This will format the cells as text.
+
+Click "OK" to close the "Format Cells" dialog box.
