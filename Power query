@@ -1,5 +1,21 @@
 
-= Text.Combine({"<a href=""", [API], """>", [API], "</a>"})
+let
+    Source = Web.Page(Web.Contents("https://github.com/public-api-lists/public-api-lists#public-api-lists")),
+    Data = Source{1}[Data],
+    #"Changed Type" = Table.TransformColumnTypes(Data,{{"API", type text}, {"Auth", type text}, {"HTTPS", type text}, {"CORS", type text}, {"Link", type text}}),
+    #"Added Custom" = Table.AddColumn(#"Changed Type", "API links", each "<a href=""" & [API] & """>" & [API] & "</a>")
+in
+    #"Added Custom"
+
+
+To use this code, open Excel and follow these steps:
+
+Click on the "Data" tab and select "Get Data" > "From Other Sources" > "Blank Query".
+In the "Query Editor" window that appears, click on "Advanced Editor" in the "View" tab.
+Replace the code in the editor with the code above.
+Click "Done" to close the editor.
+Click "Close & Load" to load the table into Excel.
+---------------
 Excel Power Query:
 
 Open Excel and go to the "Data" tab.
