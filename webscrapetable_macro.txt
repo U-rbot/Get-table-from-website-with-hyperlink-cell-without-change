@@ -1,0 +1,51 @@
+' Add in your macro module - excel
+Sub ExtractTableWithLinksToCSV()
+
+    ' Replace the URL below with the web page that contains the table you want to extract
+    Dim url As String
+    url = "https://example.com"
+    
+    ' Send a GET request to the webpage and parse the HTML content
+    Dim request As New MSXML2.XMLHTTP60
+    request.Open "GET", url, False
+    request.send
+    Dim html As New MSHTML.HTMLDocument
+    html.body.innerHTML = request.responseText
+    
+    ' Find the table element using the HTMLDocument's getElementsByClassName() method
+    Dim table As HTMLTable
+    Set table = html.getElementsByClassName("example-table")(0)
+    
+    ' Extract the table data into a 2D array
+    Dim tableData() As Variant
+    ReDim tableData(table.Rows.Length - 1, table.Rows(0).Cells.Length - 1)
+    Dim row As Long, col As Long
+    For row = 0 To table.Rows.Length - 1
+        For col = 0 To table.Rows(0).Cells.Length - 1
+            Dim cellText As String
+            cellText = table.Rows(row).Cells(col).innerText
+            If InStr(1, cellText, "http") > 0 Then
+                Dim link As String
+                link = table.Rows(row).Cells(col).getElementsByTagName("a")(0).href
+                tableData(row, col) = "=HYPERLINK(""" & link & """,""" & cellText & """)"
+            Else
+                tableData(row, col) = cellText
+            End If
+        Next col
+    Next row
+    
+    ' Save the table data to a CSV file
+    Dim fileName As String
+    fileName = "example.csv"
+    Dim fso As New FileSystemObject
+    Dim file As TextStream
+    Set file = fso.CreateTextFile(fileName, True)
+    For row = 0 To UBound(tableData, 1)
+        file.WriteLine Join(Application.Index(tableData, row, 0), ",")
+    Next row
+    file.Close
+    
+    ' Print a confirmation message
+    MsgBox "Table extracted and saved to " & fileName
+
+End Sub
