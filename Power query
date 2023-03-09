@@ -1,0 +1,24 @@
+Excel Power Query:
+
+Open Excel and go to the "Data" tab.
+
+Click on "From Web" in the "Get & Transform Data" section.
+
+In the "From Web" window, enter the URL of the webpage that contains the table you want to extract and click "OK".
+
+The "Navigator" window will appear and display a list of tables available on the webpage. Select the table you want to extract and click "Edit".
+
+The Power Query Editor window will appear, displaying the table data. To extract the hyperlink text, you will need to transform the column containing the text to include hyperlinks.
+
+a. Click on the column header for the column containing the hyperlink text.
+b. In the "Add Column" tab, click "Custom Column".
+c. In the "Custom Column" window, enter a name for the new column and enter the following formula to create a hyperlink for the text:
+
+less
+Copy code
+=IFERROR(HYPERLINK(INDEX(SPLIT([Column1],",",1),1),INDEX(SPLIT([Column1],",",2),1)),[Column1])
+This formula splits the text by the comma character (assuming the text is in the format "text, URL"), creates a hyperlink for the URL, and returns the hyperlink text.
+
+d. Click "OK" to create the new column.
+
+Once you have transformed the column, you can save the table data to a CSV file by clicking "Close & Load" in the "Home" tab and selecting "Close & Load To" -> "CSV".
