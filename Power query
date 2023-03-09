@@ -1,3 +1,5 @@
+
+= Text.Combine({"<a href=""", [API], """>", [API], "</a>"})
 Excel Power Query:
 
 Open Excel and go to the "Data" tab.
